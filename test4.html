@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+    <head>
+        <title>gRaphaël Static Line Charts</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="author" content="Dmitry Baranovskiy">
+        <meta name="description" content="Charting JavaScript Library">
+        <link rel="stylesheet" href="demos/analytics_files/demo.css" type="text/css" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="demo-print.css" type="text/css" media="print" charset="utf-8">
+        <script src="../raphael.js" type="text/javascript" charset="utf-8"></script>
+        <script src="g.raphael.js" type="text/javascript" charset="utf-8"></script>
+        <script src="g.line.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" charset="utf-8">
+Raphael.fn.drawGrid = function (x, y, w, h, wv, hv, color) {
+    color = color || "#000";
+    var path = ["M", Math.round(x) + .5, Math.round(y) + .5, "L", Math.round(x + w) + .5, Math.round(y) + .5, Math.round(x + w) + .5, Math.round(y + h) + .5, Math.round(x) + .5, Math.round(y + h) + .5, Math.round(x) + .5, Math.round(y) + .5],
+        rowHeight = h / hv,
+        columnWidth = w / wv;
+    for (var i = 1; i < hv; i++) {
+        path = path.concat(["M", Math.round(x) + .5, Math.round(y + i * rowHeight) + .5, "H", Math.round(x + w) + .5]);
+    }
+    for (i = 1; i < wv; i++) {
+        path = path.concat(["M", Math.round(x + i * columnWidth) + .5, Math.round(y) + .5, "V", Math.round(y + h) + .5]);
+    }
+    return this.path(path.join(",")).attr({stroke: color});
+};
+
+            window.onload = function () {
+
+
+                var r = Raphael("holder");
+                
+                // rewrite default Raphael colors
+                Raphael.fn.g.colors = [];
+                var yellow = .1333;
+                var red = 0;
+                var green = .2;
+                var blue = .6;
+                var purple = .75;
+                var orange = .05;
+                var hues = [red, blue, green, yellow, purple, orange];
+                for (var i = 0; i < 10; i++) {
+                    if (i < hues.length) {
+                        Raphael.fn.g.colors.push("hsb(" + hues[i] + ", 1, 1)");
+                    } else {
+                        Raphael.fn.g.colors.push("hsb(" + hues[i - hues.length] + ", 1, .5)");
+                    }
+                }
+                
+                // fonts...
+                r.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
+                r.g.txtattr.color = 'green';
+                
+                // generate 3 random arrays
+                var x = [], y = [], y2 = [], y3 = [];
+                for (var i = 0; i < 10; i++) {
+                    x[i] = i * 10;
+                    y[i] = (y[i - 1] || 30) + (Math.random() * 15) - 7.5;
+                    y2[i] = (y2[i - 1] || 15) + (Math.random() * 15) - 7.5;
+                    y3[i] = (y3[i - 1] || 0) + (Math.random() * 15) - 7.5;
+                }
+                
+                // title
+                r.g.text(480, 10, "shade = true");
+
+                
+                // draw a grid
+                r.drawGrid(10, 10, 500, 220, 9, 9, "#333");
+                
+                // draw the chart
+                var chart = r.g.linechart(10, 10, 500, 220, x, [y, y2, y3], {shade: true, width: 4, smooth: true, symbol: 'o', symbolWidth: 1.5, symbolFill:'#000'});
+                chart.lines[0].attr({width: 1});
+            };
+        </script>
+    </head>
+    <body class="raphael" id="g.raphael.dmitry.baranovskiy.com">
+        <div id="holder" style='height:500px'></div>
+        <p>
+            Demo of <a href="http://g.raphaeljs.com/">gRaphaël</a> JavaScript library.
+        </p>
+    </body>
+</html>
