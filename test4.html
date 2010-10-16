@@ -28,7 +28,6 @@ Raphael.fn.drawGrid = function (x, y, w, h, wv, hv, color) {
 
             window.onload = function () {
 
-
                 var r = Raphael("holder");
                 
                 // rewrite default Raphael colors
@@ -49,8 +48,9 @@ Raphael.fn.drawGrid = function (x, y, w, h, wv, hv, color) {
                 }
                 
                 // fonts...
-                r.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
-                r.g.txtattr.color = 'green';
+                r.g.txtattr.font = '10px "Helvetica Neue",Helvetica,"Arial Unicode MS",Arial,sans-serif';
+                r.g.txtattr.stroke = '#999';
+                r.g.txtattr.fill = '#999';
                 
                 // generate 3 random arrays
                 var x = [], y = [], y2 = [], y3 = [];
@@ -62,15 +62,17 @@ Raphael.fn.drawGrid = function (x, y, w, h, wv, hv, color) {
                 }
                 
                 // title
-                r.g.text(480, 10, "shade = true");
+                r.g.text(260, 10, "title");
 
                 
                 // draw a grid
-                r.drawGrid(10, 10, 500, 220, 9, 9, "#333");
+                r.drawGrid(20, 20, 480, 200, 24, 10, "#333");
                 
                 // draw the chart
-                var chart = r.g.linechart(10, 10, 500, 220, x, [y, y2, y3], {shade: true, width: 4, smooth: true, symbol: 'o', symbolWidth: 1.5, symbolFill:'#000'});
+                var chart = r.g.linechart(10, 10, 500, 220, x, [y, y2, y3], {shade: true, width: 4, smooth: true, symbol: 'o', symbolWidth: 1.5, symbolFill:'#000', axis: "0 0 1 1", stroke:'#fff'});
                 chart.lines[0].attr({width: 1});
+                chart.axis.attr({stroke: '#fff'});
+                // chart.axis.txtattr.color = '#fff';
             };
         </script>
     </head>
